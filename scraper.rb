@@ -3,18 +3,11 @@
 # frozen_string_literal: true
 
 require 'scraperwiki'
-require 'nokogiri'
-require 'open-uri'
+require 'scraped'
 require 'pry'
 
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
-
-class String
-  def tidy
-    gsub(/[[:space:]]+/, ' ').strip
-  end
-end
 
 def date_from(str)
   return if str.to_s.empty?
@@ -23,7 +16,6 @@ end
 
 def noko_for(url)
   Nokogiri::HTML(open(url).read)
-  #  Nokogiri::HTML(open(url).read, nil, 'utf-8')
 end
 
 def scrape_list(url)
