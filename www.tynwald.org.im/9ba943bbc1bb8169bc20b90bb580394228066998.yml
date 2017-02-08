@@ -1,0 +1,51 @@
+---
+request:
+  method: get
+  uri: http://www.tynwald.org.im/memoff/member/Pages/QuayleRH.aspx
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Cache-Control:
+    - private, max-age=0
+    Content-Type:
+    - text/html; charset=utf-8
+    Expires:
+    - Tue, 24 Jan 2017 14:10:26 GMT
+    Last-Modified:
+    - Wed, 08 Feb 2017 14:10:26 GMT
+    Vary:
+    - Accept-Encoding
+    Server:
+    - Microsoft-IIS/7.5
+    Sprequestguid:
+    - ca07d9b2-d780-4997-85c8-d1090acf1b1b
+    X-Sharepointhealthscore:
+    - '0'
+    X-Aspnet-Version:
+    - 2.0.50727
+    X-Powered-By:
+    - ASP.NET
+    Microsoftsharepointteamservices:
+    - 14.0.0.6115
+    X-Ms-Invokeapp:
+    - 1; RequireReadOnly
+    Date:
+    - Wed, 08 Feb 2017 14:10:26 GMT
+    Content-Length:
+    - '16185'
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Wed, 08 Feb 2017 14:10:25 GMT
