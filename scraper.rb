@@ -2,12 +2,13 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'scraperwiki'
-require 'scraped'
 require 'pry'
+require 'scraped'
+require 'scraperwiki'
 
-require 'open-uri/cached'
-OpenURI::Cache.cache_path = '.cache'
+# require 'open-uri/cached'
+# OpenURI::Cache.cache_path = '.cache'
+require 'scraped_page_archive/open-uri'
 
 class String
   def to_date
