@@ -36,11 +36,11 @@ end
 
 class MemberPage < TynwaldPage
   field :id do
-    box.css('img.ms-rteImage-2/@src').text.split('/').last.sub(/\..*?$/, '').downcase
+    image.split('/').last.sub(/\..*?$/, '').downcase
   end
 
   field :name do
-    title.captures.first.sub('Hon ', '')
+    title.captures.first.sub('Hon ', '').sub('MHK','').tidy
   end
 
   field :area do
@@ -48,15 +48,15 @@ class MemberPage < TynwaldPage
   end
 
   field :image do
-    box.css('img.ms-rteImage-2/@src').text
+    (noko.at_css('img.ms-rteImage-2/@src') || noko.at_css('img.ms-rtePosition-2/@src')).text
   end
 
   field :email do
-    box.css('h2 a[href*="mailto"]/@href').text.sub('mailto:', '')
+    noko.css('h2 a[href*="mailto"]/@href').text.sub('mailto:', '')
   end
 
   field :phone do
-    box.css('h2').text[/Contact Tel: ([\d[[:space:]]]+)/, 1].tidy
+    noko.css('h2').text.tidy[/Tel: ([\d[[:space:]]()]+)/, 1].tidy
   end
 
   field :birth_date do
@@ -69,12 +69,8 @@ class MemberPage < TynwaldPage
 
   private
 
-  def box
-    noko.css('.page_content_nav')
-  end
-
   def title
-    box.css('h1').text.tidy.match(/(.*)\s+\((.*?)\)/)
+    noko.css('h1').text.tidy.match(/(.*)\s+\((.*?)\)/)
   end
 end
 
@@ -86,7 +82,7 @@ end
 ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
 start = 'http://www.tynwald.org.im/memoff/member/Pages/default.aspx'
 data = scrape(start => MembersPage).member_urls.map do |url|
-  scrape(url => MemberPage).to_h.merge(term: 2011)
+  scrape(url => MemberPage).to_h.merge(term: 2016)
 end
 # puts data.map { |r| r.reject { |_k, v| v.to_s.empty? }.sort_by { |k, _v| k }.to_h }
 ScraperWiki.save_sqlite(%i(id term), data)
