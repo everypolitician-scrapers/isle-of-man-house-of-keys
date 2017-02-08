@@ -63,6 +63,14 @@ class MemberPage < TynwaldPage
     noko.xpath('.//strong[contains(.,"Born")]//following-sibling::text()').text.to_date
   end
 
+  field :facebook do
+    noko.css('a[href*=facebook]/@href').text
+  end
+
+  field :twitter do
+    noko.css('a[href*=twitter]/@href').map(&:text).reject { |t| t.include? 'TynwaldInfo' }.join(";")
+  end
+
   field :source do
     url
   end
