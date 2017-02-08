@@ -9,43 +9,83 @@ require 'pry'
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
 
-def date_from(str)
-  return if str.to_s.empty?
-  return Date.parse(str).to_s rescue nil
-end
-
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
-end
-
-def scrape_list(url)
-  noko = noko_for(url)
-  noko.xpath('.//h2[a[@id="HKMembers"]]/following-sibling::div[@class="ms-rtestate-read ms-rte-wpbox"]//div[@class="link-item"]/a/@href').each do |m|
-    scrape_person(m.text)
+class String
+  def to_date
+    return if to_s.empty?
+    return Date.parse(self).to_s rescue nil
   end
 end
 
-def scrape_person(url)
-  noko = noko_for(url)
+class TynwaldPage < Scraped::HTML
+  decorator Scraped::Response::Decorator::AbsoluteUrls
+end
 
-  box = noko.css('.page_content_nav')
+class MembersPage < TynwaldPage
+  field :member_urls do
+    box.xpath('.//div[@class="link-item"]/a/@href').map(&:text)
+  end
 
-  title = box.css('h1').text.tidy.match(/(.*)\s+\((.*?)\)/)
+  private
 
-  data = {
-    id:         box.css('img.ms-rteImage-2/@src').text.split('/').last.sub(/\..*?$/, '').downcase,
-    name:       title.captures.first.sub('Hon ', ''),
-    area:       title.captures.last,
-    image:      box.css('img.ms-rteImage-2/@src').text,
-    email:      box.css('h2 a[href*="mailto"]/@href').text.sub('mailto:', ''),
-    phone:      box.css('h2').text[/Contact Tel: ([\d[[:space:]]]+)/, 1].tidy,
-    birth_date: date_from(noko.xpath('.//strong[contains(.,"Born")]//following-sibling::text()').text),
-    term:       2011,
-    source:     url,
-  }
-  data[:image] = URI.join(url, URI.escape(data[:image])).to_s unless data[:image].to_s.empty?
-  ScraperWiki.save_sqlite(%i(id term), data)
+  def box
+    noko.xpath('.//h2[a[@id="HKMembers"]]/following-sibling::div[@class="ms-rtestate-read ms-rte-wpbox"]')
+  end
+
+end
+
+class MemberPage < TynwaldPage
+  field :id do
+    box.css('img.ms-rteImage-2/@src').text.split('/').last.sub(/\..*?$/, '').downcase
+  end
+
+  field :name do
+    title.captures.first.sub('Hon ', '')
+  end
+
+  field :area do
+    title.captures.last
+  end
+
+  field :image do
+    box.css('img.ms-rteImage-2/@src').text
+  end
+
+  field :email do
+    box.css('h2 a[href*="mailto"]/@href').text.sub('mailto:', '')
+  end
+
+  field :phone do
+    box.css('h2').text[/Contact Tel: ([\d[[:space:]]]+)/, 1].tidy
+  end
+
+  field :birth_date do
+    noko.xpath('.//strong[contains(.,"Born")]//following-sibling::text()').text.to_date
+  end
+
+  field :source do
+    url
+  end
+
+  private
+
+  def box
+    noko.css('.page_content_nav')
+  end
+
+  def title
+    box.css('h1').text.tidy.match(/(.*)\s+\((.*?)\)/)
+  end
+end
+
+def scrape(h)
+  url, klass = h.to_a.first
+  klass.new(response: Scraped::Request.new(url: url).response)
 end
 
 ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
-scrape_list('http://www.tynwald.org.im/memoff/member/Pages/default.aspx')
+start = 'http://www.tynwald.org.im/memoff/member/Pages/default.aspx'
+data = scrape(start => MembersPage).member_urls.map do |url|
+  scrape(url => MemberPage).to_h.merge(term: 2011)
+end
+# puts data.map { |r| r.reject { |_k, v| v.to_s.empty? }.sort_by { |k, _v| k }.to_h }
+ScraperWiki.save_sqlite(%i(id term), data)
