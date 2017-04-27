@@ -34,6 +34,7 @@ class MemberPage < TynwaldPage
   end
 
   field :birth_date do
+    # TODO: Member birth dates are not being captured #5
     noko.xpath('.//strong[contains(.,"Born")]//following-sibling::text()').text.to_date
   end
 
