@@ -31,7 +31,6 @@ class MembersPage < TynwaldPage
   def box
     noko.xpath('.//h2[a[@id="HKMembers"]]/following-sibling::div[@class="ms-rtestate-read ms-rte-wpbox"]')
   end
-
 end
 
 class MemberPage < TynwaldPage
@@ -40,7 +39,7 @@ class MemberPage < TynwaldPage
   end
 
   field :name do
-    title.captures.first.sub('Hon ', '').sub('MHK','').tidy
+    title.captures.first.sub('Hon ', '').sub('MHK', '').tidy
   end
 
   field :area do
@@ -68,7 +67,7 @@ class MemberPage < TynwaldPage
   end
 
   field :twitter do
-    noko.css('a[href*=twitter]/@href').map(&:text).reject { |t| t.include? 'TynwaldInfo' }.join(";")
+    noko.css('a[href*=twitter]/@href').map(&:text).reject { |t| t.include? 'TynwaldInfo' }.join(';')
   end
 
   field :source do
