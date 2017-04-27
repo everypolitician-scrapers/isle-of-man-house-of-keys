@@ -10,15 +10,13 @@ require 'scraperwiki'
 # OpenURI::Cache.cache_path = '.cache'
 require 'scraped_page_archive/open-uri'
 
+require_rel 'lib'
+
 class String
   def to_date
     return if to_s.empty?
     return Date.parse(self).to_s rescue nil
   end
-end
-
-class TynwaldPage < Scraped::HTML
-  decorator Scraped::Response::Decorator::AbsoluteUrls
 end
 
 class MembersPage < TynwaldPage
