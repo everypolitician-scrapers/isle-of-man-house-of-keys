@@ -1,0 +1,16 @@
+---
+:class: MemberPage
+:url: http://www.tynwald.org.im/memoff/member/Pages/CaineDHP.aspx
+:to_h:
+  :id: cained
+  :name: Daphne Hilary Penelope CAINE
+  :area: Garff
+  :image: http://www.tynwald.org.im/SiteCollectionImages/CaineD.jpg
+  :email: daphne.caine@gov.im
+  :phone: "(01624) 651519"
+  # TODO: Scrape birth date. The member's birth year is stated on the site.
+  # issue: #5
+  :birth_date: 
+  :facebook: https://www.facebook.com/CaineforGarff/
+  :twitter: https://twitter.com/daffydowndilly
+  :source: http://www.tynwald.org.im/memoff/member/Pages/CaineDHP.aspx

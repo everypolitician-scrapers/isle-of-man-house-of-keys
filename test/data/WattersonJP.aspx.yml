@@ -1,0 +1,16 @@
+---
+:class: MemberPage
+:url: http://www.tynwald.org.im/memoff/member/Pages/WattersonJP.aspx
+:to_h:
+  :id: wattersonjp
+  # TODO: The honorfics need to be separated from the member name (issue #2)
+  # TODO: Do not capture SHK ('Speaker of the House of Keys') (issue:  #3)
+  :name: Juan Paul WATTERSON BA FCA CMgr FCMI SHK
+  :area: Rushen
+  :image: http://www.tynwald.org.im/SiteCollectionImages/WattersonJP.jpg
+  :email: juan.watterson@gov.im
+  :phone: 01624 685507
+  :birth_date:
+  :facebook: ''
+  :twitter: ''
+  :source: http://www.tynwald.org.im/memoff/member/Pages/WattersonJP.aspx
