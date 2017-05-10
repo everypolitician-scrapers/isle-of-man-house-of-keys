@@ -36,7 +36,7 @@ def scrape(h)
   klass.new(response: Scraped::Request.new(url: url).response)
 end
 
-ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 start = 'http://www.tynwald.org.im/memoff/member/Pages/default.aspx'
 data = scrape(start => MembersPage).member_urls.map do |url|
   scrape(url => MemberPage).to_h.merge(term: 2016)
