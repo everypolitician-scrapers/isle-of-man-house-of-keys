@@ -22,15 +22,15 @@ response:
     Content-Type:
     - text/html; charset=utf-8
     Expires:
-    - Fri, 29 Dec 2017 12:47:20 GMT
+    - Sat, 30 Dec 2017 21:13:52 GMT
     Last-Modified:
-    - Sat, 13 Jan 2018 12:47:20 GMT
+    - Sun, 14 Jan 2018 21:13:52 GMT
     Vary:
     - Accept-Encoding
     Server:
     - Microsoft-IIS/7.5
     Sprequestguid:
-    - cad5e54c-d189-4c13-bacb-455d617feef8
+    - 7bf09722-27b9-4129-b9c3-2d0011849213
     X-Sharepointhealthscore:
     - '0'
     X-Aspnet-Version:
@@ -42,10 +42,10 @@ response:
     X-Ms-Invokeapp:
     - 1; RequireReadOnly
     Date:
-    - Sat, 13 Jan 2018 12:47:21 GMT
+    - Sun, 14 Jan 2018 21:13:52 GMT
     Content-Length:
-    - '16583'
+    - '16580'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sat, 13 Jan 2018 12:47:15 GMT
+recorded_at: Sun, 14 Jan 2018 21:13:44 GMT
